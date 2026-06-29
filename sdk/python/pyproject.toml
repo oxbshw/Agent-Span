@@ -13,7 +13,7 @@ authors = [{ name = "AgentSpan Contributors" }]
 keywords = ["agentspan", "llm", "agent", "scraping", "api-client"]
 dependencies = [
     "httpx>=0.27",
-    "pydantic>=2.5",
+    "pydantic>=2.13.4",
 ]
 
 [project.optional-dependencies]
