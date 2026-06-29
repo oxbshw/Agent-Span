@@ -1,0 +1,12 @@
+# Source & build inputs — not needed in the packaged .vsix
+.vscode/**
+.vscode-test/**
+src/**
+**/*.ts
+**/*.map
+tsconfig.json
+.gitignore
+.vscodeignore
+node_modules/**
+
+# Keep README.md and out/** in the package.

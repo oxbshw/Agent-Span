@@ -1,0 +1,12 @@
+[book]
+title = "AgentSpan"
+authors = ["AgentSpan Contributors"]
+language = "en"
+src = "src"
+description = "The Web Access Gateway for AI Agents"
+
+[output.html]
+default-theme = "navy"
+preferred-dark-theme = "navy"
+git-repository-url = "https://github.com/oxbshw/Agent-Span"
+edit-url-template = "https://github.com/oxbshw/Agent-Span/edit/main/docs/{path}"

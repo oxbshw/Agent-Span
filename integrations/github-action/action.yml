@@ -1,0 +1,111 @@
+name: "agentspan-read"
+description: "Read and extract the content of a web page via an AgentSpan gateway (GET /api/v1/read)."
+author: "AgentSpan"
+branding:
+  icon: "download-cloud"
+  color: "purple"
+
+inputs:
+  url:
+    description: "The URL of the page to read and extract content from."
+    required: true
+  server-url:
+    description: "Base URL of the AgentSpan gateway."
+    required: false
+    default: "http://localhost:8080"
+  api-key:
+    description: "Optional API key sent as the X-API-Key header."
+    required: false
+    default: ""
+  output-file:
+    description: "Optional path to write the extracted body text to. If empty, no file is written."
+    required: false
+    default: ""
+
+outputs:
+  content:
+    description: "The extracted body text of the page."
+    value: ${{ steps.read.outputs.content }}
+  title:
+    description: "The extracted page title."
+    value: ${{ steps.read.outputs.title }}
+
+runs:
+  using: "composite"
+  steps:
+    - id: read
+      shell: bash
+      env:
+        AGENTSPAN_URL: ${{ inputs.url }}
+        AGENTSPAN_SERVER_URL: ${{ inputs.server-url }}
+        AGENTSPAN_API_KEY: ${{ inputs.api-key }}
+        AGENTSPAN_OUTPUT_FILE: ${{ inputs.output-file }}
+      run: |
+        set -euo pipefail
+
+        if [ -z "${AGENTSPAN_URL:-}" ]; then
+          echo "::error::Input 'url' is required." >&2
+          exit 1
+        fi
+
+        # Strip a single trailing slash from the server URL to avoid double slashes.
+        server="${AGENTSPAN_SERVER_URL%/}"
+
+        # URL-encode the target URL using jq so query params are passed safely.
+        if ! command -v jq >/dev/null 2>&1; then
+          echo "::error::'jq' is required but was not found on the runner." >&2
+          exit 1
+        fi
+        encoded_url="$(printf '%s' "$AGENTSPAN_URL" | jq -sRr @uri)"
+
+        endpoint="${server}/api/v1/read?url=${encoded_url}"
+        echo "Reading: ${AGENTSPAN_URL}"
+        echo "Endpoint: ${server}/api/v1/read"
+
+        # Build curl args. Use an array so the optional header is omitted cleanly.
+        curl_args=(--fail --silent --show-error --location --max-time 60
+          --header "Accept: application/json")
+        if [ -n "${AGENTSPAN_API_KEY:-}" ]; then
+          curl_args+=(--header "X-API-Key: ${AGENTSPAN_API_KEY}")
+        fi
+
+        response="$(curl "${curl_args[@]}" "${endpoint}")" || {
+          echo "::error::Request to AgentSpan failed for ${endpoint}" >&2
+          exit 1
+        }
+
+        # Extract fields from the documented shape: { content: { title, body } }.
+        title="$(printf '%s' "$response" | jq -r '.content.title // ""')"
+        body="$(printf '%s' "$response" | jq -r '.content.body // ""')"
+
+        if [ -z "$body" ]; then
+          echo "::warning::AgentSpan returned an empty body for ${AGENTSPAN_URL}"
+        fi
+
+        # Emit step outputs using the multiline delimiter form (safe for arbitrary text).
+        delim="agentspan_$(date +%s)_$RANDOM"
+        {
+          echo "title<<${delim}"
+          printf '%s\n' "$title"
+          echo "${delim}"
+          echo "content<<${delim}"
+          printf '%s\n' "$body"
+          echo "${delim}"
+        } >> "$GITHUB_OUTPUT"
+
+        # Optionally write the body to a file.
+        if [ -n "${AGENTSPAN_OUTPUT_FILE:-}" ]; then
+          out_dir="$(dirname "$AGENTSPAN_OUTPUT_FILE")"
+          mkdir -p "$out_dir"
+          printf '%s\n' "$body" > "$AGENTSPAN_OUTPUT_FILE"
+          echo "Wrote extracted content to ${AGENTSPAN_OUTPUT_FILE}"
+        fi
+
+        # Add a short summary to the job log.
+        {
+          echo "### AgentSpan read"
+          echo ""
+          echo "- **URL:** ${AGENTSPAN_URL}"
+          echo "- **Title:** ${title:-(none)}"
+          echo "- **Body length:** ${#body} chars"
+        } >> "$GITHUB_STEP_SUMMARY"

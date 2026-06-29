@@ -1,0 +1,35 @@
+name: Publish SDKs
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+# Publishes the JS and Rust SDKs on release. The other registries (RubyGems,
+# Maven Central, Packagist, NuGet) are wired the same way once their credentials
+# are added as repo secrets; Python is handled by python-publish.yml.
+jobs:
+  npm:
+    name: npm (@agentspan/sdk)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sdk/js
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+      - run: node --test
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  crates:
+    name: crates.io (agentspan-sdk)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo publish -p agentspan-sdk --token ${{ secrets.CARGO_TOKEN }}

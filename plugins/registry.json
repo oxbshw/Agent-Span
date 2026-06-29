@@ -1,0 +1,28 @@
+{
+  "plugins": [
+    {
+      "name": "mastodon",
+      "description": "Read & search Mastodon posts and timelines",
+      "channel": "mastodon",
+      "source": "https://github.com/oxbshw/Agent-Span-plugin-mastodon"
+    },
+    {
+      "name": "stackoverflow",
+      "description": "Search Stack Overflow questions and answers",
+      "channel": "stackoverflow",
+      "source": "https://github.com/oxbshw/Agent-Span-plugin-stackoverflow"
+    },
+    {
+      "name": "hackernews-jobs",
+      "description": "Parse Hacker News 'Who is hiring' threads into structured jobs",
+      "channel": "hn-jobs",
+      "source": "https://github.com/oxbshw/Agent-Span-plugin-hn-jobs"
+    },
+    {
+      "name": "producthunt",
+      "description": "Read & search Product Hunt launches",
+      "channel": "producthunt",
+      "source": "https://github.com/oxbshw/Agent-Span-plugin-producthunt"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224 48" fill="none" role="img" aria-label="AgentSpan">
+  <defs>
+    <linearGradient id="ag-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E8A5F3"/>
+      <stop offset="1" stop-color="#FFDFC4"/>
+    </linearGradient>
+  </defs>
+  <!-- Icon: an "A" gateway routing out to channel nodes -->
+  <g stroke="url(#ag-grad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M11 39 L23 9 L35 39"/>
+    <path d="M16 29 L30 29"/>
+    <path d="M23 9 L23 2"/>
+    <path d="M11 39 L5 44"/>
+    <path d="M35 39 L41 44"/>
+  </g>
+  <circle cx="23" cy="9" r="4.2" fill="url(#ag-grad)"/>
+  <circle cx="5" cy="44" r="2.6" fill="url(#ag-grad)"/>
+  <circle cx="41" cy="44" r="2.6" fill="url(#ag-grad)"/>
+  <circle cx="23" cy="2" r="2.4" fill="url(#ag-grad)"/>
+  <!-- Wordmark -->
+  <text x="54" y="33" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" letter-spacing="-0.6" fill="#1A1714">AgentSpan</text>
+</svg>

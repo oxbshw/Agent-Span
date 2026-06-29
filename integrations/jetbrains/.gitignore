@@ -1,0 +1,11 @@
+# Gradle
+.gradle/
+build/
+
+# IntelliJ Platform Gradle plugin sandbox
+.intellijPlatform/
+
+# IDE / OS
+.idea/
+*.iml
+.DS_Store

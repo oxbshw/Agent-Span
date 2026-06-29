@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "agentspan": {
+      "url": "http://localhost:9000/mcp",
+      "transport": "http"
+    }
+  }
+}

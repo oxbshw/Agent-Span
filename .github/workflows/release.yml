@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+          - os: macos-latest
+            target: aarch64-apple-darwin
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Build release binaries
+        run: cargo build --release --target ${{ matrix.target }} -p agentspan-cli -p agentspan-mcp
+
+      - name: Package (unix)
+        if: runner.os != 'Windows'
+        run: |
+          mkdir dist
+          cp target/${{ matrix.target }}/release/agentspan dist/ || true
+          cp target/${{ matrix.target }}/release/agentspan-mcp dist/ || true
+          tar -czf agentspan-${{ matrix.target }}.tar.gz -C dist .
+
+      - name: Package (windows)
+        if: runner.os == 'Windows'
+        run: |
+          mkdir dist
+          copy target\${{ matrix.target }}\release\agentspan.exe dist\
+          copy target\${{ matrix.target }}\release\agentspan-mcp.exe dist\
+          Compress-Archive -Path dist\* -DestinationPath agentspan-${{ matrix.target }}.zip
+        shell: pwsh
+
+      - name: Upload to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            agentspan-${{ matrix.target }}.tar.gz
+            agentspan-${{ matrix.target }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

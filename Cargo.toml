@@ -1,0 +1,51 @@
+[workspace]
+members = [
+    "crates/agentspan-core",
+    "crates/agentspan-probe",
+    "crates/agentspan-router",
+    "crates/agentspan-cache",
+    "crates/agentspan-auth",
+    "crates/agentspan-channels",
+    "crates/agentspan-mcp",
+    "crates/agentspan-api",
+    "crates/agentspan-cli",
+    "sdk/rust",
+    "tests/integration",
+]
+resolver = "2"
+
+[profile.dev]
+debug = false
+
+[workspace.package]
+version = "0.5.0"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/oxbshw/Agent-Span"
+homepage = "https://agentspan.ai"
+description = "The Web Access Gateway for AI Agents"
+authors = ["AgentSpan Contributors"]
+keywords = ["mcp", "ai", "agents", "web", "gateway"]
+categories = ["web-programming", "api-bindings", "development-tools"]
+
+[workspace.dependencies]
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+thiserror = "2"
+anyhow = "1"
+tracing = "0.1"
+axum = "0.8"
+clap = { version = "4", features = ["derive"] }
+async-trait = "0.1"
+chrono = { version = "0.4", features = ["serde"] }
+futures = "0.3"
+figment = { version = "0.10", features = ["env", "yaml"] }
+dashmap = "6"
+reqwest = { version = "0.12", features = ["native-tls", "json"], default-features = false }
+rss = "2"
+sha1 = "0.10"
+sha2 = "0.10"
+base64 = "0.22"
+rand = "0.8"
