@@ -45,7 +45,7 @@ figment = { version = "0.10", features = ["env", "yaml"] }
 dashmap = "6"
 reqwest = { version = "0.12", features = ["native-tls", "json"], default-features = false }
 rss = "2"
-sha1 = "0.10"
+sha1 = "0.11"
 sha2 = "0.10"
 base64 = "0.22"
 rand = "0.8"
