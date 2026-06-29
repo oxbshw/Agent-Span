@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "agentspan": {
+      "command": "agentspan-mcp",
+      "args": []
+    }
+  }
+}

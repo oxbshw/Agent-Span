@@ -1,0 +1,134 @@
+/* ============================================================
+   AgentSpan /status dashboard — shares the landing's design
+   language (Space Grotesk / Space Mono, pastel bands, HUD chrome).
+   ============================================================ */
+
+.dashboard {
+  position: relative;
+  font-family: 'Space Grotesk', -apple-system, sans-serif;
+  min-height: 100vh;
+  transition: color 1s var(--ease-quint);
+}
+.dashboard .mono { font-family: 'Space Mono', 'JetBrains Mono', monospace; }
+.dash-main { position: relative; z-index: 1; }
+
+.dash-section {
+  position: relative; overflow: hidden;
+  padding: clamp(64px, 9vh, 120px) clamp(22px, 5vw, 80px);
+}
+.dash-section > * { position: relative; z-index: 2; width: 100%; max-width: 1200px; margin-inline: auto; }
+
+.dash-h {
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+  font-size: clamp(30px, 5.4vw, 70px); line-height: 0.9;
+  letter-spacing: -0.045em; text-transform: uppercase;
+}
+.dash-section-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; margin-bottom: 30px; flex-wrap: wrap; }
+
+/* ---------------- Stat cards ---------------- */
+.dash-stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.dash-stat-row.is-mini-row { grid-template-columns: repeat(3, 1fr); margin-top: 26px; }
+.dash-stat {
+  border: 1.4px solid rgba(57, 50, 45, 0.22); border-radius: 14px; padding: 20px;
+  background: rgba(255, 255, 255, 0.22); display: flex; flex-direction: column; gap: 14px;
+  transition: transform 0.4s var(--ease-expo), box-shadow 0.4s var(--ease-expo), border-color 0.4s var(--ease-expo);
+}
+.dash-stat:hover { transform: translateY(-3px); border-color: rgba(57, 50, 45, 0.4); box-shadow: 0 14px 30px rgba(57, 50, 45, 0.14); }
+.dash-stat-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.dash-stat-label { font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.65; }
+.dash-stat-value { display: flex; align-items: baseline; gap: 6px; font-weight: 700; font-size: clamp(28px, 3.4vw, 46px); letter-spacing: -0.03em; }
+.dash-stat.is-mini .dash-stat-value { font-size: clamp(24px, 2.6vw, 34px); }
+.dash-stat-suffix { font-size: 0.5em; font-weight: 600; opacity: 0.6; }
+.dash-stat-trend { color: #2e9e5b; align-self: center; }
+
+/* ---------------- Status header ---------------- */
+.dash-status { min-height: min(90vh, 780px); display: flex; flex-direction: column; justify-content: center; gap: 34px; }
+.dash-status-orb { position: absolute; inset: 0; display: grid; place-items: center; z-index: 1; opacity: 0.4; filter: blur(0.3px); pointer-events: none; }
+.dash-status-head { display: flex; flex-direction: column; align-items: flex-start; }
+.dash-status .mk-display { font-size: clamp(40px, 8vw, 120px); line-height: 0.86; letter-spacing: -0.05em; }
+
+/* ---------------- Channel grid ---------------- */
+.chan-search { display: inline-flex; align-items: center; gap: 8px; border: 1.4px solid rgba(57, 50, 45, 0.28); border-radius: 999px; padding: 9px 16px; background: rgba(255, 255, 255, 0.3); }
+.chan-search input { border: 0; background: transparent; outline: none; font-family: 'Space Mono', monospace; font-size: 12.5px; color: var(--ink); width: 180px; }
+.chan-search input::placeholder { color: rgba(57, 50, 45, 0.5); }
+.chan-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.chan-tabs button {
+  border: 1px solid rgba(57, 50, 45, 0.26); background: transparent; color: inherit; cursor: pointer;
+  border-radius: 999px; padding: 6px 14px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+.chan-tabs button:hover { border-color: rgba(57, 50, 45, 0.5); }
+.chan-tabs button.is-active { background: var(--ink); color: var(--peach); border-color: var(--ink); }
+.chan-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(184px, 1fr)); gap: 12px; }
+.chan-tile {
+  text-align: left; cursor: pointer; font-family: inherit; color: inherit;
+  border: 1.4px solid rgba(57, 50, 45, 0.2); border-radius: 12px; padding: 14px;
+  background: rgba(255, 255, 255, 0.2); display: flex; flex-direction: column; gap: 9px;
+  transition: transform 0.35s var(--ease-expo), box-shadow 0.35s var(--ease-expo), border-color 0.35s;
+}
+.chan-tile:hover { transform: translateY(-3px); border-color: rgba(57, 50, 45, 0.42); box-shadow: 0 12px 26px rgba(57, 50, 45, 0.14); }
+.chan-tile-top { display: flex; align-items: center; gap: 8px; }
+.chan-tile-name { font-weight: 700; font-size: 14.5px; }
+.chan-tile-lat { margin-left: auto; font-size: 11px; opacity: 0.6; }
+.chan-tile-meta { display: flex; gap: 8px; align-items: center; }
+.chan-badge { font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: rgba(57, 50, 45, 0.1); }
+.chan-tier { font-size: 9.5px; opacity: 0.55; }
+.chan-tile-primary { font-size: 10.5px; opacity: 0.55; }
+.chan-tile-detail { display: flex; flex-direction: column; gap: 3px; font-size: 10px; opacity: 0.7; border-top: 1px dashed rgba(57, 50, 45, 0.22); padding-top: 8px; }
+.chan-empty { opacity: 0.6; grid-column: 1 / -1; }
+
+/* ---------------- Performance charts ---------------- */
+.chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.chart-card { background: rgba(255, 255, 255, 0.34); border: 1.4px solid rgba(57, 50, 45, 0.2); border-radius: 16px; padding: 18px 18px 8px; }
+.chart-title { display: block; font-size: 10.5px; letter-spacing: 0.14em; opacity: 0.6; margin-bottom: 10px; }
+.recharts-surface { overflow: visible; }
+
+/* ---------------- Health monitor (charcoal) ---------------- */
+.dash-health .eyebrow, .dash-install .eyebrow { opacity: 0.7; }
+.health-alert {
+  display: inline-flex; align-items: center; gap: 9px; margin-bottom: 20px;
+  border: 1px solid rgba(232, 165, 243, 0.5); background: rgba(232, 165, 243, 0.12);
+  color: #E8A5F3; border-radius: 10px; padding: 9px 14px; font-size: 11.5px; letter-spacing: 0.04em;
+}
+.health-table-wrap { overflow-x: auto; border: 1px solid rgba(255, 223, 196, 0.16); border-radius: 14px; }
+.health-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 620px; }
+.health-table th { text-align: left; padding: 13px 18px; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255, 223, 196, 0.55); border-bottom: 1px solid rgba(255, 223, 196, 0.14); font-weight: 400; }
+.health-table td { padding: 12px 18px; border-bottom: 1px solid rgba(255, 223, 196, 0.08); }
+.health-table tr:last-child td { border-bottom: 0; }
+.health-table tr:hover td { background: rgba(255, 223, 196, 0.04); }
+.health-chan { font-weight: 700; }
+.health-status { display: inline-flex; align-items: center; gap: 8px; }
+.health-backend, .health-check { opacity: 0.7; font-size: 12px; }
+.health-badge { font-size: 9.5px; letter-spacing: 0.1em; padding: 2px 9px; border-radius: 999px; }
+.health-badge.is-yes { background: rgba(232, 165, 243, 0.2); color: #E8A5F3; }
+.health-badge.is-no { background: rgba(255, 223, 196, 0.1); color: rgba(255, 223, 196, 0.6); }
+.health-summary { display: flex; gap: 12px; align-items: center; margin-top: 20px; font-size: 12px; letter-spacing: 0.04em; opacity: 0.85; }
+.health-summary b { font-weight: 700; }
+.health-summary .sep { opacity: 0.4; }
+
+/* ---------------- Quick actions ---------------- */
+.action-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.action-card {
+  position: relative; text-decoration: none; color: inherit;
+  border: 1.4px solid rgba(7, 7, 7, 0.2); border-radius: 16px; padding: 24px;
+  background: rgba(255, 255, 255, 0.18); display: flex; flex-direction: column; gap: 10px; min-height: 150px;
+  transition: transform 0.4s var(--ease-expo), box-shadow 0.4s var(--ease-expo), border-color 0.4s;
+}
+.action-card:hover { transform: translateY(-4px); border-color: rgba(7, 7, 7, 0.4); box-shadow: 0 16px 32px rgba(57, 50, 45, 0.16); }
+.action-ico { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: rgba(7, 7, 7, 0.08); color: var(--ink); }
+.action-title { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; margin-top: auto; }
+.action-hint { font-size: 11px; opacity: 0.6; }
+.action-arrow { position: absolute; top: 22px; right: 24px; font-size: 18px; opacity: 0.4; transition: transform 0.3s var(--ease-expo); }
+.action-card:hover .action-arrow { transform: translate(3px, -3px); opacity: 0.8; }
+
+/* ---------------- Install snippet (charcoal) ---------------- */
+.code-card { max-width: 760px; border: 1px solid rgba(255, 223, 196, 0.16); border-radius: 14px; overflow: hidden; background: #211f1d; }
+.code-card-bar { display: flex; align-items: center; gap: 12px; padding: 11px 16px; border-bottom: 1px solid rgba(255, 223, 196, 0.12); font-size: 11px; letter-spacing: 0.1em; color: rgba(255, 223, 196, 0.6); }
+.code-dots { display: inline-flex; gap: 5px; }
+.code-dots i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255, 223, 196, 0.28); }
+.code-copy { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; background: rgba(255, 223, 196, 0.1); border: 1px solid rgba(255, 223, 196, 0.18); color: var(--peach); border-radius: 8px; padding: 5px 11px; font-size: 11px; letter-spacing: 0.08em; transition: background 0.3s; }
+.code-copy:hover { background: rgba(255, 223, 196, 0.18); }
+.code-card-body { padding: 20px 22px; font-family: 'JetBrains Mono', 'Space Mono', monospace; font-size: 13.5px; line-height: 2; color: var(--peach); margin: 0; }
+.code-line.p { color: var(--peach); }
+.code-line.p::before { content: "$ "; color: var(--pink); }
+.code-line.c { color: rgba(255, 223, 196, 0.45); }

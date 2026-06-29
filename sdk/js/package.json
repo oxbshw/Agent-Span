@@ -1,0 +1,24 @@
+{
+  "name": "@agentspan/sdk",
+  "version": "0.4.0",
+  "description": "Official JavaScript/TypeScript SDK for the AgentSpan gateway",
+  "type": "module",
+  "main": "src/index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./src/index.js"
+    }
+  },
+  "files": ["src", "index.d.ts", "README.md"],
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": ["agentspan", "ai-agent", "web-reader", "search", "mcp", "sdk"],
+  "license": "MIT",
+  "repository": "https://github.com/oxbshw/Agent-Span",
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,37 @@
+/* Responsive system — fluid type copied verbatim from the reference, plus the
+   dashboard's own grid breakpoints at the reference's 992/768 cutoffs. */
+
+/* Fluid body font-size (verbatim from reference). */
+@media screen and (min-width: 5120px) { body { font-size: 0.7vw; } }
+@media screen and (min-width: 2560px) { body { font-size: 0.8vw; } }
+@media screen and (min-width: 1920px) and (max-width: 2559px) { body { font-size: 0.85vw; } }
+@media screen and (min-width: 1680px) and (max-width: 1919px) { body { font-size: 0.9vw; } }
+@media screen and (max-width: 1440px) { body { font-size: 0.95vw; } }
+
+/* Fluid html rem base (verbatim from reference). */
+html { font-size: 3.25rem; }
+@media screen and (max-width: 5120px) { html { font-size: calc(0.050000000000000044rem + 1vw); } }
+@media screen and (max-width: 1920px) { html { font-size: calc(0.24999999999999944rem + 0.8333333333333338vw); } }
+@media screen and (max-width: 1680px) { html { font-size: calc(0.25rem + 0.8333333333333333vw); } }
+@media screen and (max-width: 1440px) { html { font-size: 1rem; } }
+
+/* Section texture scales up on large screens (verbatim sizes). */
+@media screen and (min-width: 1920px) { .texture-layer { background-size: 38px auto; } }
+@media screen and (min-width: 5120px) { .texture-layer { background-size: 82px auto; } }
+
+/* Dashboard chrome breakpoints. */
+@media (max-width: 1100px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .split-2-1 { grid-template-columns: 1fr; }
+}
+@media (max-width: 991px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .hamburger { display: inline-flex; }
+  .main-area { margin-left: 0; }
+}
+@media (max-width: 768px) {
+  .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+  .page { padding: 16px; }
+}

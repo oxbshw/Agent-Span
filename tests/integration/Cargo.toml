@@ -1,0 +1,17 @@
+[package]
+name = "agentspan-integration-tests"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+
+[dependencies]
+agentspan-api = { path = "../../crates/agentspan-api" }
+agentspan-core = { path = "../../crates/agentspan-core" }
+agentspan-auth = { path = "../../crates/agentspan-auth" }
+axum = { workspace = true }
+tokio = { workspace = true }
+tower = { version = "0.5", features = ["util"] }
+reqwest = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }

@@ -1,0 +1,39 @@
+[package]
+name = "agentspan-api"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[[bin]]
+name = "agentspan-api"
+path = "src/main.rs"
+
+[features]
+default = []
+websocket = ["axum/ws"]
+
+[dependencies]
+agentspan-core = { path = "../agentspan-core", features = ["schema"] }
+agentspan-router = { path = "../agentspan-router" }
+agentspan-channels = { path = "../agentspan-channels" }
+agentspan-cache = { path = "../agentspan-cache" }
+agentspan-auth = { path = "../agentspan-auth" }
+axum = { workspace = true }
+tokio = { workspace = true }
+tokio-stream = { version = "0.1", features = ["sync"] }
+futures = { workspace = true }
+rand = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+chrono = { workspace = true }
+utoipa = { version = "4" }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["full"] }
+tower = { version = "0.5", features = ["util"] }

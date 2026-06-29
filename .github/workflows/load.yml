@@ -1,0 +1,59 @@
+name: Load test
+
+on:
+  push:
+    branches: [main, master]
+    tags: ["v*"]
+  pull_request:
+    # Informational on PRs — won't block merge, but surfaces regressions.
+  workflow_dispatch:
+
+jobs:
+  loadtest:
+    name: k6 smoke (1000 RPS, p99<200ms)
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ github.event_name == 'pull_request' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+
+      - name: Build release API
+        run: cargo build --release --bin agentspan-api
+
+      - name: Start AgentSpan API
+        run: |
+          ./target/release/agentspan-api --port 18080 &
+          echo $! > api.pid
+          # Wait for /health
+          for i in $(seq 1 50); do
+            if curl -sf http://127.0.0.1:18080/health >/dev/null 2>&1; then
+              echo "API healthy"
+              break
+            fi
+            sleep 0.1
+          done
+
+      - name: Install k6
+        run: |
+          sudo gpg -k
+          sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A36459D36C00C0E89875F0F9F
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo apt-get update
+          sudo apt-get install -y k6
+
+      - name: Run k6 smoke load test
+        env:
+          BASE_URL: http://127.0.0.1:18080
+        run: k6 run tests/load/k6_smoke.js
+
+      - name: Stop API
+        if: always()
+        run: |
+          if [ -f api.pid ]; then
+            kill $(cat api.pid) 2>/dev/null || true
+          fi

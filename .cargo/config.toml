@@ -1,0 +1,8 @@
+# AgentSpan Cargo configuration
+#
+# Windows GNU toolchain note:
+# Building tokio/axum on x86_64-pc-windows-gnu requires a full MinGW-w64
+# installation (gcc, dlltool, as). Ensure the MinGW bin directory is on PATH
+# before running cargo, e.g.:
+#   export PATH="/f/mingw64/bin:$PATH"
+# Adjust the path to match your MinGW installation location.

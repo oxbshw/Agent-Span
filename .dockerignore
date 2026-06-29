@@ -1,0 +1,13 @@
+target
+.git
+.github
+.vscode
+.idea
+node_modules
+dist
+.env
+*.log
+research/
+docs/book
+target/
+**/*.rs.bk

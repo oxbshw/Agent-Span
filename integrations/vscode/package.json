@@ -1,0 +1,66 @@
+{
+  "name": "agentspan",
+  "displayName": "AgentSpan",
+  "description": "Read & search the web from VS Code through the AgentSpan HTTP gateway.",
+  "version": "0.1.0",
+  "publisher": "agentspan",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "agentspan",
+    "web",
+    "search",
+    "read",
+    "gateway",
+    "ai"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "agentspan.searchWeb",
+        "title": "AgentSpan: Search Web"
+      },
+      {
+        "command": "agentspan.readUrl",
+        "title": "AgentSpan: Read URL"
+      },
+      {
+        "command": "agentspan.federatedSearch",
+        "title": "AgentSpan: Federated Search"
+      }
+    ],
+    "configuration": {
+      "title": "AgentSpan",
+      "properties": {
+        "agentspan.serverUrl": {
+          "type": "string",
+          "default": "http://localhost:8080",
+          "description": "Base URL of the AgentSpan gateway (no trailing slash)."
+        },
+        "agentspan.apiKey": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Optional API key sent as the `X-API-Key` header. Leave empty if the gateway is unauthenticated."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.4.0"
+  }
+}

@@ -1,0 +1,29 @@
+# AgentSpan
+
+> The Web Access Gateway for AI Agents. Read any URL as clean text and search
+> 14 platforms (web, GitHub, YouTube, Reddit, Twitter/X, Bilibili, Hacker News,
+> V2EX, XiaoHongShu, LinkedIn, Xueqiu, Xiaoyuzhou podcasts, Exa web search, RSS)
+> through one REST API, CLI, MCP server, and Python SDK.
+
+AgentSpan is both a runtime gateway (it serves reads/searches behind a REST API
+with caching, auth, and multi-tenancy) and a capability layer (it installs and
+health-checks the upstream tools, extracts cookies, and registers an agent skill).
+
+## Quick start
+- `agentspan doctor` — see which channels are healthy and the active backend
+- `agentspan install --channels all` — install upstream tools (gh, yt-dlp, mcporter, OpenCLI, ...)
+- `agentspan config from-browser chrome` — import login cookies (Cookie-Editor flow)
+- `agentspan skill install` — register the SKILL.md for Claude Code / Cursor / agents
+- `agentspan serve --port 8080` — start the gateway
+
+## Interfaces
+- REST: POST /api/v1/read (smart, auto-detect channel), GET /api/v1/channels/{name}/search
+- MCP: the `agentspan-mcp` binary (stdio) exposes 16 tools (web_read, web_search, github_read, youtube_subtitles, reddit_search, hn_search, doctor, ...)
+- CLI: install, uninstall, setup, doctor, watch, config, skill, update, serve
+- SDK: `pip install agentspan` (async httpx client)
+
+## Docs
+- docs/CLAUDE.md — development context
+- docs/troubleshooting.md — common failures and fixes
+- docs/cookie-export.md — importing login cookies
+- docs/guides/setup-twitter.md, docs/guides/setup-xiaohongshu.md — per-platform setup

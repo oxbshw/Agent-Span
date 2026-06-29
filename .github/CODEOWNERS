@@ -1,0 +1,20 @@
+# Code owners for review routing.
+# https://docs.github.com/articles/about-code-owners
+
+# Default owner for everything not matched more specifically.
+*                       @agentspan/maintainers
+
+# Rust core — the crates that everything else depends on.
+/crates/agentspan-core/     @agentspan/maintainers
+/crates/agentspan-router/   @agentspan/maintainers
+/crates/agentspan-cache/    @agentspan/maintainers
+/crates/agentspan-auth/     @agentspan/maintainers
+
+# SDKs.
+/sdk/                   @agentspan/maintainers
+
+# Dashboard.
+/web/                   @agentspan/maintainers
+
+# CI / release plumbing.
+/.github/               @agentspan/maintainers

@@ -1,0 +1,20 @@
+//! CLI subcommands.
+
+pub mod benchmark;
+pub mod check_update;
+pub mod completions;
+pub mod config;
+pub mod doctor;
+pub mod format;
+pub mod install;
+pub mod loadtest;
+pub mod mcp;
+pub mod plugin;
+pub mod serve;
+pub mod setup;
+pub mod skill;
+pub mod transcribe;
+pub mod tunnel;
+pub mod uninstall;
+pub mod version;
+pub mod watch;
