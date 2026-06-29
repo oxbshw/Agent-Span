@@ -1,0 +1,14 @@
+# pre-commit hook definitions provided by AgentSpan.
+# See: https://pre-commit.com/#creating-new-hooks
+#
+# Consumers reference these from their own .pre-commit-config.yaml — see
+# integrations/pre-commit/README.md for setup instructions.
+
+- id: agentspan-check-links
+  name: AgentSpan check Markdown links
+  description: Verify that external http(s) links in Markdown files are reachable.
+  entry: integrations/pre-commit/check-links.sh
+  language: script
+  files: \.md$
+  types: [file]
+  require_serial: false

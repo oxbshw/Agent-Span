@@ -1,0 +1,16 @@
+[package]
+name = "agentspan-sdk"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Official Rust SDK for the AgentSpan gateway."
+
+[dependencies]
+reqwest = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["full"] }
+wiremock = "0.6"

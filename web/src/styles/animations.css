@@ -1,0 +1,87 @@
+/* Keyframes — copied verbatim from the reference (docs/reference/index.html). */
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleup {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes scaleup2 {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideup {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0%); }
+}
+
+@keyframes blinking-opacity {
+  0%, 40% { opacity: 1; }
+  50%, 90% { opacity: 0.3; }
+}
+
+@keyframes arrow-fade {
+  0%, 50% { opacity: 0.25; }
+  51%, 100% { opacity: 1; }
+}
+
+@keyframes corner-fade {
+  0%, 85% { opacity: 1; }
+  86%, 100% { opacity: 0; }
+}
+
+/* Blinking decor blocks — exact behaviour from the reference. */
+.blinking-decor-block {
+  animation: blinking-opacity 1.67s linear infinite;
+}
+.blinking-decor-block:nth-child(2) {
+  animation-delay: 0.83s;
+}
+
+/* Slide-up text mask — exact from the reference. */
+.dynamic-mask {
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+.dynamic-mask span {
+  display: block;
+  position: relative;
+  transform: translateY(100%);
+  animation-name: slideup;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  animation-play-state: paused;
+}
+
+/* Line-mask hover — exact from the reference (data-* attrs for typed JSX). */
+[data-responsive-text="true"],
+a[data-line-mask] [data-line-mask-text] {
+  transition: color 1s cubic-bezier(.2, 1, .3, 1), text-shadow 1s cubic-bezier(.2, 1, .3, 1);
+}
+a[data-line-mask] [data-line-mask-text] {
+  text-shadow: 0px 1em 0px var(--shadow-color, currentColor);
+}
+a[data-line-mask] [data-line-mask-text="pastel-pink"] { --shadow-color: #FFDFC4; }
+a[data-line-mask] [data-line-mask-text="peach"] { --shadow-color: #FFEBB0; }
+a[data-line-mask] [data-line-mask-text="currentColor"] { --shadow-color: currentColor; }
+
+/* Preloader corners. */
+.preloader_corner {
+  animation: corner-fade 0.9s linear infinite;
+  animation-fill-mode: forwards;
+}
+
+/* Entrance helpers. */
+.anim-fade-in { animation: fadeIn 0.6s ease both; }
+.anim-scaleup2 { animation: scaleup2 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }

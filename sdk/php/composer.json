@@ -1,0 +1,23 @@
+{
+  "name": "agentspan/sdk",
+  "description": "Official PHP SDK for the AgentSpan gateway",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.1",
+    "guzzlehttp/guzzle": "^7.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.0"
+  },
+  "autoload": {
+    "psr-4": { "AgentSpan\\": "src/" },
+    "files": ["src/Exceptions.php"]
+  },
+  "autoload-dev": {
+    "psr-4": { "AgentSpan\\Tests\\": "tests/" }
+  },
+  "scripts": {
+    "test": "phpunit tests"
+  }
+}

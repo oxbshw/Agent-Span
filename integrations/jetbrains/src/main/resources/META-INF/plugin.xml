@@ -1,0 +1,66 @@
+<idea-plugin>
+    <id>com.agentspan.intellij</id>
+    <name>AgentSpan</name>
+    <version>0.1.0</version>
+    <vendor email="support@agentspan.com" url="https://agentspan.com">AgentSpan</vendor>
+
+    <description><![CDATA[
+        <p><b>AgentSpan</b> connects your IDE to an
+        <a href="https://agentspan.com">AgentSpan</a> HTTP gateway &mdash; the same gateway
+        AI agents use to read and search the web.</p>
+        <ul>
+            <li><b>AgentSpan: Search Web</b> &mdash; federated search across configured channels.</li>
+            <li><b>AgentSpan: Read URL</b> &mdash; fetch and extract the readable content of a page.</li>
+            <li>An <b>AgentSpan</b> tool window that renders results.</li>
+        </ul>
+        <p>Configure the server URL and an optional API key under
+        <i>Settings &rarr; Tools &rarr; AgentSpan</i>.</p>
+    ]]></description>
+
+    <!-- Core platform only; no language-specific dependencies needed. -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Persistent application-level settings. -->
+        <applicationService serviceImplementation="com.agentspan.settings.AgentSpanSettings"/>
+
+        <!-- Settings UI under Tools. -->
+        <applicationConfigurable
+                parentId="tools"
+                instance="com.agentspan.settings.AgentSpanConfigurable"
+                id="com.agentspan.settings.AgentSpanConfigurable"
+                displayName="AgentSpan"/>
+
+        <!-- Tool window that displays read/search results. -->
+        <toolWindow
+                id="AgentSpan"
+                anchor="bottom"
+                secondary="false"
+                icon="AllIcons.General.Web"
+                factoryClass="com.agentspan.toolwindow.AgentSpanToolWindowFactory"/>
+
+        <notificationGroup
+                id="AgentSpan"
+                displayType="BALLOON"/>
+    </extensions>
+
+    <actions>
+        <group id="com.agentspan.actions.AgentSpanGroup" text="AgentSpan" popup="true">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+
+            <action id="com.agentspan.actions.SearchWebAction"
+                    class="com.agentspan.actions.SearchWebAction"
+                    text="AgentSpan: Search Web"
+                    description="Run a federated web search through the AgentSpan gateway.">
+                <keyboard-shortcut keymap="$default" first-keystroke="control alt shift S"/>
+            </action>
+
+            <action id="com.agentspan.actions.ReadUrlAction"
+                    class="com.agentspan.actions.ReadUrlAction"
+                    text="AgentSpan: Read URL"
+                    description="Fetch and extract readable content from a URL via AgentSpan.">
+                <keyboard-shortcut keymap="$default" first-keystroke="control alt shift R"/>
+            </action>
+        </group>
+    </actions>
+</idea-plugin>
