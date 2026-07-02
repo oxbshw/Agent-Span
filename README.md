@@ -49,6 +49,11 @@ model and turns it into a real **gateway** — it does the reading itself, behin
   AgentSpan is optimized for the 52 platforms it knows.
 - Not a hosted SaaS. It's a self-hosted binary you run on your own infra.
 
+> "Why not MCP servers / OpenRouter / Composio / SearXNG / LangChain / a
+> browser agent?" — each gets a concrete answer in
+> [docs/why-agentspan.md](docs/why-agentspan.md). Performance claims are
+> CI-verified on every PR: [BENCHMARKS.md](BENCHMARKS.md).
+
 ## Website
 
 ![AgentSpan Site](docs/site-preview.png)
