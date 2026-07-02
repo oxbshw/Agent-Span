@@ -28,29 +28,34 @@ jobs:
 
       - name: Start AgentSpan API
         run: |
-          ./target/release/agentspan-api --port 18080 &
+          ./target/release/agentspan-api --port 18080 > api.log 2>&1 &
           echo $! > api.pid
-          # Wait for /health
-          for i in $(seq 1 50); do
+          # Wait for /health — and fail loudly if it never comes up, instead
+          # of letting k6 hammer a port nobody is listening on.
+          for i in $(seq 1 100); do
             if curl -sf http://127.0.0.1:18080/health >/dev/null 2>&1; then
-              echo "API healthy"
-              break
+              echo "API healthy on :18080"
+              exit 0
             fi
             sleep 0.1
           done
+          echo "::error::API did not become healthy on :18080 within 10s"
+          cat api.log
+          exit 1
 
+      # Official installer action (downloads the release binary) — the old
+      # apt + hkp keyserver route flaked with "keyserver receive failed".
       - name: Install k6
-        run: |
-          sudo gpg -k
-          sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A36459D36C00C0E89875F0F9F
-          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
-          sudo apt-get update
-          sudo apt-get install -y k6
+        uses: grafana/setup-k6-action@v1
 
       - name: Run k6 smoke load test
         env:
           BASE_URL: http://127.0.0.1:18080
         run: k6 run tests/load/k6_smoke.js
+
+      - name: Show API log on failure
+        if: failure()
+        run: cat api.log || true
 
       - name: Stop API
         if: always()
