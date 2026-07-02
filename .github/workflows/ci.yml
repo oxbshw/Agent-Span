@@ -39,6 +39,10 @@ jobs:
 
       - name: Run cargo audit
         uses: actions-rust-lang/audit@v1
+        with:
+          # quick-xml < 0.41 DoS advisories: no released rss/atom_syndication
+          # accepts 0.41 yet. Mirror of the deny.toml carve-out; issue #42.
+          ignore: RUSTSEC-2026-0194,RUSTSEC-2026-0195
 
   deny:
     name: cargo deny (licenses, bans, sources)

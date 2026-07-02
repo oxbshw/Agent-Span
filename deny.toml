@@ -17,6 +17,13 @@ yanked = "deny"
 # ones (e.g. proc-macro-error via utoipa-gen 4.x, RUSTSEC-2024-0370) still
 # surface as warnings but can't be fixed here without unrelated major bumps.
 unmaintained = "workspace"
+ignore = [
+    # quick-xml < 0.41 DoS vectors (via rss/atom_syndication feed parsing).
+    # No released rss/atom_syndication accepts quick-xml 0.41 yet — remove
+    # these the moment upstream releases. Tracked in issue #42.
+    { id = "RUSTSEC-2026-0194", reason = "fix requires quick-xml 0.41; rss 2.0.13 pins ^0.37 — waiting on upstream release" },
+    { id = "RUSTSEC-2026-0195", reason = "fix requires quick-xml 0.41; rss 2.0.13 pins ^0.37 — waiting on upstream release" },
+]
 
 [licenses]
 version = 2
