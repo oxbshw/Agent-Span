@@ -8,8 +8,7 @@
 //!
 //! Everything here is deterministic and dependency-free — the same estimator the
 //! rest of the stack can budget against, with no tokenizer crate and no model call.
-//! It reuses the [`summarize`](crate::intelligence::summarize) and
-//! [`smart_truncate`](crate::intelligence::smart_truncate) primitives.
+//! It reuses the [`summarize`] and [`smart_truncate`] primitives.
 
 use serde::Serialize;
 
