@@ -13,7 +13,7 @@ jobs:
     name: Rust CI
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
@@ -32,8 +32,22 @@ jobs:
       - name: Run tests
         run: cargo test --all
 
+      - name: Check documentation
+        env:
+          RUSTDOCFLAGS: -D warnings
+        run: cargo doc --workspace --no-deps
+
       - name: Run cargo audit
         uses: actions-rust-lang/audit@v1
+
+  deny:
+    name: cargo deny (licenses, bans, sources)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Run cargo-deny
+        uses: EmbarkStudios/cargo-deny-action@v2
 
   coverage:
     name: Coverage (tarpaulin report)
@@ -41,7 +55,7 @@ jobs:
     # Informational: publishes a coverage report artifact, does not gate CI.
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
@@ -79,10 +93,10 @@ jobs:
       run:
         working-directory: sdk/python
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 

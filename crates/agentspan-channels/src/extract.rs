@@ -7,8 +7,8 @@
 //! just the fields they asked for — so a channel can answer in a JSON shape the
 //! agent can parse, every time, with zero token spend on an LLM extraction pass.
 //!
-//! It reuses [`extract_key_facts`](crate::intelligence::extract_key_facts) for URLs
-//! and ISO dates and [`summarize`](crate::intelligence::summarize) for the summary.
+//! It reuses [`extract_key_facts`] for URLs and ISO dates and [`summarize`]
+//! for the summary.
 
 use serde::Serialize;
 use serde_json::{json, Map, Value};

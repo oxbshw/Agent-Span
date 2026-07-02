@@ -1,0 +1,47 @@
+# cargo-deny configuration — supply-chain policy for the workspace.
+#
+# Checked in CI on every push/PR (see .github/workflows/ci.yml). Run locally
+# with `cargo deny check`.
+#
+# Docs: https://embarkstudios.github.io/cargo-deny/
+
+[graph]
+# Match CI's `--all-features` so feature-gated deps (websocket, redis) are
+# also under policy.
+all-features = true
+
+[advisories]
+version = 2
+yanked = "deny"
+# Fail only when a *direct* workspace dependency is unmaintained — transitive
+# ones (e.g. proc-macro-error via utoipa-gen 4.x, RUSTSEC-2024-0370) still
+# surface as warnings but can't be fixed here without unrelated major bumps.
+unmaintained = "workspace"
+
+[licenses]
+version = 2
+# Permissive licenses only — this is an MIT project; anything copyleft or
+# unknown must be a deliberate, reviewed exception.
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "Zlib",
+    "Unicode-3.0",
+    "MPL-2.0",
+    "CC0-1.0",
+    "OpenSSL",
+    "Unlicense",
+]
+
+[bans]
+# Duplicate crate versions bloat the binary but are usually transitive noise;
+# surface them without failing the build.
+multiple-versions = "warn"
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
