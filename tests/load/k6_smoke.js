@@ -18,6 +18,9 @@ const readLatency = new Trend('read_latency', true);
 const errorRate = new Rate('errors');
 
 export const options = {
+  // Default trend stats stop at p(95); include p(99) so handleSummary can
+  // report the number the threshold is actually judged on.
+  summaryTrendStats: ['avg', 'min', 'med', 'max', 'p(90)', 'p(95)', 'p(99)'],
   // Target the spec SLA: 1000 req/sec for 30 seconds.
   scenarios: {
     smoke_read: {
@@ -80,16 +83,17 @@ export default function () {
 
 export function handleSummary(data) {
   // Print a concise summary line so CI logs surface the headline numbers.
-  const p99 = (data.metrics.http_req_duration?.values?.['p(99)'] ?? 0).toFixed(1);
-  const failed = (data.metrics.http_req_failed?.values?.rate ?? 1).toFixed(4);
-  const rps = (data.metrics.http_reqs?.values?.rate ?? 0).toFixed(1);
+  const p99 = data.metrics.http_req_duration?.values?.['p(99)'];
+  const failed = data.metrics.http_req_failed?.values?.rate;
+  const rps = data.metrics.http_reqs?.values?.rate;
+  const fmt = (v, digits) => (v === undefined ? 'n/a' : v.toFixed(digits));
+  const pass = p99 !== undefined && p99 < 200 && failed !== undefined && failed < 0.01;
   console.log(
     `\n--- AgentSpan load summary ---\n` +
-      `RPS: ${rps}\n` +
-      `p99: ${p99} ms  (threshold: <200)\n` +
-      `failed rate: ${failed}  (threshold: <0.01)\n` +
-      `pass: ${data.metrics.http_req_duration?.values?.['p(99)'] < 200 &&
-        (data.metrics.http_req_failed?.values?.rate ?? 1) < 0.01}\n`
+      `RPS: ${fmt(rps, 1)}\n` +
+      `p99: ${fmt(p99, 1)} ms  (threshold: <200)\n` +
+      `failed rate: ${fmt(failed, 4)}  (threshold: <0.01)\n` +
+      `pass: ${pass}\n`
   );
   return {};
 }
