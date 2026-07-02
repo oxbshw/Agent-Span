@@ -17,6 +17,15 @@ resolver = "2"
 [profile.dev]
 debug = false
 
+# Production binaries: optimize for size and speed. Unwinding is left on
+# (no `panic = "abort"`) so a panic in one request task unwinds and drops only
+# that connection — Tokio isolates the task — rather than aborting the whole
+# gateway process, which `panic = "abort"` would do.
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "symbols"
+
 [workspace.package]
 version = "0.5.0"
 edition = "2021"
