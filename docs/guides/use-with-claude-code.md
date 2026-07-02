@@ -1,6 +1,6 @@
 # Use AgentSpan with Claude Code
 
-AgentSpan gives Claude Code web access through 92 MCP tools — read any URL,
+AgentSpan gives Claude Code web access through 91 MCP tools — read any URL,
 search 52 platforms, check channel health.
 
 ## Setup (one command)
@@ -60,7 +60,7 @@ Claude Code will call `web_read` or `hackernews_read` via AgentSpan.
 agentspan mcp tools
 ```
 
-92 tools across 52 channels: `web_read`, `github_read`, `youtube_subtitles`,
+91 tools across 52 channels: `web_read`, `github_read`, `youtube_subtitles`,
 `hackernews_search`, `reddit_search`, `arxiv_search`, `wikipedia_read`,
 `spotify_read`, and more.
 

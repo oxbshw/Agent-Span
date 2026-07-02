@@ -5,14 +5,14 @@
 <p align="center">
   <a href="https://github.com/oxbshw/Agent-Span/actions/workflows/ci.yml"><img src="https://github.com/oxbshw/Agent-Span/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/channels-52-4f8cff?style=flat-square" alt="channels">
-  <img src="https://img.shields.io/badge/MCP%20tools-92-9b59b6?style=flat-square" alt="mcp tools">
+  <img src="https://img.shields.io/badge/MCP%20tools-91-9b59b6?style=flat-square" alt="mcp tools">
   <img src="https://img.shields.io/badge/SDKs-9-orange?style=flat-square" alt="sdks">
   <img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="license">
   <img src="https://img.shields.io/badge/rust-async%20(Tokio)-orange?style=flat-square&logo=rust" alt="rust">
 </p>
 
 AgentSpan gives AI agents persistent, scalable, **cached** access to **52 internet
-platforms** through one REST API, an SSE event stream, a native **MCP server (92
+platforms** through one REST API, an SSE event stream, a native **MCP server (91
 tools)**, **9 language SDKs**, a CLI, and a React dashboard — all on an async Rust core.
 
 The channels also **heal themselves** — a background monitor auto-switches failing
@@ -34,7 +34,7 @@ model and turns it into a real **gateway** — it does the reading itself, behin
 | Channels | 13 | **52** |
 | Caching | ❌ | ✅ L1/L2/L3 |
 | REST API | ❌ (CLI only) | ✅ + SSE + OpenAPI |
-| MCP tools | 1 | **92** |
+| MCP tools | 1 | **91** |
 | SDKs | 0 | **9** (Py, JS/TS, Rust, Go, Ruby, Java, PHP, C#, Swift) |
 | Multi-tenant / RBAC / audit | ❌ | ✅ |
 | Web dashboard | ❌ | ✅ React |
@@ -66,7 +66,7 @@ reference design and filled with real AgentSpan content:
 
 | # | Section | What it shows |
 |---|---|---|
-| 0 | **Preloader** | gradient gateway orb with pulsing rings, 0→100 boot counter, terminal readouts (`<92 MCP TOOLS>`, `// 2026`) |
+| 0 | **Preloader** | gradient gateway orb with pulsing rings, 0→100 boot counter, terminal readouts (`<91 MCP TOOLS>`, `// 2026`) |
 | 1 | **Hero** | `Web Access Gateway` display headline over a distortion-shaded coral gateway figure (its head an open ring routing a request through the sky), pink cloud-sky background, scattered coordinate tags, flank labels, `EXPLORE` / `GITHUB` pills |
 | 2 | **Channels** | circular portal with the orb spinning inside + `52 CHANNELS` + 4 numbered category cards |
 | 3 | **Network** | **Network grid** — all 52 channels as brand-colored silhouette avatars, each wearing the platform's real logo (or a hand-drawn glyph where no logo exists), with a live status dot + category |
@@ -104,7 +104,7 @@ flowchart TD
     end
     subgraph Gateway["AgentSpan Core (Rust, async)"]
       API["REST API + SSE"]
-      MCPS["MCP Server (92 tools)"]
+      MCPS["MCP Server (91 tools)"]
       Router["Router: probe · select · retry · circuit-break"]
       Cache["3-tier Cache (L1/L2/L3)"]
       Auth["Auth: keys · tenants · RBAC · rate-limit · audit"]
@@ -139,7 +139,7 @@ agentspan mcp install --client claude-code    # or: cursor, windsurf, cline
 # Or print the config and paste it yourself:
 agentspan mcp print-config --client cursor
 
-# See all 92 tools:
+# See all 91 tools:
 agentspan mcp tools
 ```
 
@@ -277,10 +277,6 @@ See [KNOWN_ISSUES.md](KNOWN_ISSUES.md) for current rough edges and build quirks.
 - [Issues](https://github.com/oxbshw/Agent-Span/issues) — bugs and feature requests
 - [Discussions](https://github.com/oxbshw/Agent-Span/discussions) — questions and show & tell
 - [CONTRIBUTING.md](CONTRIBUTING.md) — how to add a channel or MCP tool
-
-## License
-
-MIT — see [LICENSE](LICENSE).
 
 ## Security
 

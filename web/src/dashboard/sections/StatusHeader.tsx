@@ -20,7 +20,7 @@ export function StatusHeader() {
         <span className="eyebrow mono">[ AGENTSPAN // LIVE STATUS ]</span>
         <h1 className="mk-display">AGENTSPAN GATEWAY</h1>
         <p className="mk-lead">
-          52 channels · 92 MCP tools · self-healing · Rust-powered. A live, read-only view of the
+          52 channels · 91 MCP tools · self-healing · Rust-powered. A live, read-only view of the
           gateway right now.
         </p>
       </div>

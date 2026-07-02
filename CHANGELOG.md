@@ -25,7 +25,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **`agentspan mcp` CLI command**: one-command MCP client setup.
   `agentspan mcp install --client claude-code` writes the config to the right
   file automatically. `agentspan mcp print-config` prints ready-to-paste JSON.
-  `agentspan mcp tools` lists all 92 tools. Supports Claude Code, Cursor,
+  `agentspan mcp tools` lists all 91 tools. Supports Claude Code, Cursor,
   Windsurf, Cline, Zed.
 - **MCP client configs**: `integrations/mcp-clients/` ships 5 ready-to-paste
   JSON files (claude-code, cursor, windsurf, cline, http-remote) + README.
@@ -62,7 +62,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   coding assistants.
 - README: live CI badge, "What AgentSpan is not" section, "Use with AI agents"
   quickstart, Community section, KNOWN_ISSUES link.
-- docs/src/ updated: channels.md (24 -> 52), mcp.md (36 -> 92), introduction.md,
+- docs/src/ updated: channels.md (24 -> 52), mcp.md (36 -> 91), introduction.md,
   architecture.md, getting-started.md, deployment.md, troubleshooting.md.
 - .gitignore: added `__pycache__/`, `*.pyc`, `.pytest_cache/`, `*.tsbuildinfo`;
   removed `Cargo.lock` (binaries should commit it).

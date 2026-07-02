@@ -76,7 +76,7 @@ export const totalChannels = channels.length;
 export const onlineCount = channels.filter((c) => c.status === "online").length;
 export const degradedCount = channels.filter((c) => c.status === "degraded").length;
 export const offlineCount = channels.filter((c) => c.status === "offline").length;
-export const mcpTools = 92;
+export const mcpTools = 91;
 export const successRate = 99.2;
 export const avgLatency = Math.round(channels.reduce((s, c) => s + c.latency, 0) / channels.length);
 

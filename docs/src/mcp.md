@@ -1,7 +1,7 @@
 # MCP Integration
 
 AgentSpan ships a native **Model Context Protocol** server (`agentspan-mcp`) that
-exposes **92 tools** — read + search for every channel, plus `doctor` — dispatched
+exposes **91 tools** — read + search for every channel, plus `doctor` — dispatched
 through the channel registry.
 
 ## Quick setup
@@ -13,7 +13,7 @@ agentspan mcp install --client claude-code    # or: cursor, windsurf, cline
 # Or print the config and paste it yourself:
 agentspan mcp print-config --client cursor
 
-# See all 92 tools:
+# See all 91 tools:
 agentspan mcp tools
 ```
 

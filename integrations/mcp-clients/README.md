@@ -43,4 +43,4 @@ Then point your client at `http://your-server:9000/mcp` using the
 agentspan mcp tools
 ```
 
-This prints all 92 MCP tools with their channel, operation, and description.
+This prints all 91 MCP tools with their channel, operation, and description.

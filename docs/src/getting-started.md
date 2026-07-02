@@ -27,7 +27,7 @@ docker compose up --build         # full stack: API + UI + Redis + Prometheus + 
 # One command — writes the MCP config to the right file automatically:
 agentspan mcp install --client claude-code    # or: cursor, windsurf, cline
 
-# See all 92 tools:
+# See all 91 tools:
 agentspan mcp tools
 ```
 

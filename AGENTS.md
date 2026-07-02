@@ -26,7 +26,7 @@ Python SDK: `pip install -e sdk/python[dev]` then `pytest -q` in `sdk/python/`.
 | `agentspan-auth` | API keys (SHA-256), tenants, RBAC, rate limiting, audit |
 | `agentspan-channels` | All 52 channel implementations + registry |
 | `agentspan-api` | Axum REST server, SSE, OpenAPI spec, middleware |
-| `agentspan-mcp` | MCP server (stdio + HTTP), 92 tools |
+| `agentspan-mcp` | MCP server (stdio + HTTP), 91 tools |
 | `agentspan-cli` | The `agentspan` binary — install, doctor, serve, skill, etc. |
 
 ## Adding a channel

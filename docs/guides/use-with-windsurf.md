@@ -1,6 +1,6 @@
 # Use AgentSpan with Windsurf
 
-AgentSpan gives Windsurf web access through 92 MCP tools.
+AgentSpan gives Windsurf web access through 91 MCP tools.
 
 ## Setup (one command)
 

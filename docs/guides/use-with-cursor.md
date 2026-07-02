@@ -1,6 +1,6 @@
 # Use AgentSpan with Cursor
 
-AgentSpan gives Cursor web access through 92 MCP tools.
+AgentSpan gives Cursor web access through 91 MCP tools.
 
 ## Setup (one command)
 

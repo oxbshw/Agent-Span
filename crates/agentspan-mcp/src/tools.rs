@@ -19,7 +19,7 @@ pub struct ToolDef {
     pub op: Op,
 }
 
-/// All tools exposed over MCP (92).
+/// All tools exposed over MCP (91).
 pub const TOOLS: &[ToolDef] = &[
     ToolDef {
         name: "web_read",

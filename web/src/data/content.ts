@@ -3,7 +3,7 @@
 export const site = {
   name: "AgentSpan",
   tagline: "Web Access Gateway for AI Agents",
-  description: "52 channels. 92 MCP tools. Self-healing backends. Built in Rust.",
+  description: "52 channels. 91 MCP tools. Self-healing backends. Built in Rust.",
   githubUrl: "https://github.com/oxbshw/Agent-Span",
   cratesUrl: "https://crates.io/crates/agentspan",
   docsUrl: "https://github.com/oxbshw/Agent-Span#readme",
@@ -13,19 +13,19 @@ export const site = {
 
 export const stats = [
   { label: "Channels", value: "52" },
-  { label: "MCP Tools", value: "92" },
+  { label: "MCP Tools", value: "91" },
   { label: "SDKs", value: "9" },
   { label: "Core", value: "Rust" },
 ];
 
 export const heroLabels = {
   left: ["ROUTE THE WEB", "SELF-HEAL"],
-  right: ["92 MCP TOOLS", "RUST-POWERED"],
+  right: ["91 MCP TOOLS", "RUST-POWERED"],
 };
 
 export const features = [
   { title: "52 Channels", description: "Search, social, media, dev tools — from Brave to GitHub, one gateway.", icon: "Globe" },
-  { title: "92 MCP Tools", description: "A full Model Context Protocol server your agent discovers at runtime.", icon: "Cpu" },
+  { title: "91 MCP Tools", description: "A full Model Context Protocol server your agent discovers at runtime.", icon: "Cpu" },
   { title: "Self-Healing", description: "Auto-failover, repair, and continuous health monitoring on every channel.", icon: "HeartPulse" },
   { title: "3-Tier Cache", description: "L1 memory → L2 disk → L3 Redis with smart, adaptive TTL.", icon: "Database" },
   { title: "Circuit Breaker", description: "Exponential backoff and retry with jitter, built into every request.", icon: "Shield" },
@@ -46,7 +46,7 @@ export const architecture = [
   { name: "agentspan-cache", desc: "3-tier cache + optimizer" },
   { name: "agentspan-auth", desc: "API keys, tenants, RBAC" },
   { name: "agentspan-api", desc: "Axum REST API + SSE" },
-  { name: "agentspan-mcp", desc: "MCP server (92 tools)" },
+  { name: "agentspan-mcp", desc: "MCP server (91 tools)" },
   { name: "agentspan-cli", desc: "Doctor, serve, benchmark" },
 ];
 

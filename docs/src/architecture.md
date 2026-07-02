@@ -12,7 +12,7 @@ responsibility, tied together by two core traits (`Channel` and `Backend`).
 ├─────────────────────────────────────────────────────────────┤
 │  agentspan-api            │  agentspan-mcp                  │
 │  Axum REST + SSE +        │  JSON-RPC 2.0 over stdio/HTTP   │
-│  OpenAPI + WebSocket      │  92 tools → channel registry     │
+│  OpenAPI + WebSocket      │  91 tools → channel registry     │
 ├─────────────────────────────────────────────────────────────┤
 │  agentspan-auth           │  agentspan-channels              │
 │  SHA-256 keys, tenants,   │  52 channel impls + registry +   │
@@ -161,7 +161,7 @@ or agent can act on.
 
 ## MCP server
 
-The MCP server (`agentspan-mcp`) exposes 92 tools over JSON-RPC 2.0
+The MCP server (`agentspan-mcp`) exposes 91 tools over JSON-RPC 2.0
 (protocol version `2024-11-05`):
 
 - **stdio** (default): newline-delimited JSON-RPC over stdin/stdout. For

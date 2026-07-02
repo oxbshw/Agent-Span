@@ -2,7 +2,7 @@
 
 **AgentSpan** is the Web Access Gateway for AI Agents — an async-Rust service
 that gives agents persistent, cached access to **52 internet platforms** through
-one REST API, an SSE event stream, a native **MCP server (92 tools)**, **9
+one REST API, an SSE event stream, a native **MCP server (91 tools)**, **9
 language SDKs**, a CLI, and a React dashboard.
 
 ## The problem
@@ -40,7 +40,7 @@ AgentSpan sits between your agents and the internet:
 
 - **52 channels** — web, github, youtube, tiktok, instagram, reddit, twitter,
   hackernews, arxiv, wikipedia, spotify, discord, telegram, and 39 more.
-- **92 MCP tools** — read + search per channel, plus `doctor`. stdio and HTTP
+- **91 MCP tools** — read + search per channel, plus `doctor`. stdio and HTTP
   transport.
 - **9 SDKs** — Python, JS/TS, Rust, Go, Ruby, Java, PHP, C#, Swift.
 - **OpenAPI 3.0 spec** at `/openapi.json` + Swagger UI at `/docs`.

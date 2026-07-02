@@ -11,7 +11,7 @@ interface Props {
 }
 
 const LEFT = ["C://AGENTSPAN", "_PROTOCOL_HTTP", "/////_2026", "<ACCESS GRANTED>"];
-const RIGHT = ["D://GATEWAY_CORE", "__52_CHANNELS", "<92 MCP TOOLS>", "<SELF-HEALING>"];
+const RIGHT = ["D://GATEWAY_CORE", "__52_CHANNELS", "<91 MCP TOOLS>", "<SELF-HEALING>"];
 
 export function Preloader({ onDone }: Props) {
   const [count, setCount] = useState(0);
