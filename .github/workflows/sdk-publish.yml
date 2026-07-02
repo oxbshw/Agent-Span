@@ -16,7 +16,7 @@ jobs:
       run:
         working-directory: sdk/js
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
@@ -30,6 +30,6 @@ jobs:
     name: crates.io (agentspan-sdk)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo publish -p agentspan-sdk --token ${{ secrets.CARGO_TOKEN }}
