@@ -469,7 +469,18 @@ mod tests {
             install_hint: "Reinstall the tool".to_string(),
         };
 
-        let result = engine.probe(&target).await;
+        // Executing a file we just wrote races with other tests forking in
+        // parallel: a forked child can briefly hold our write fd open, making
+        // the exec fail with ETXTBSY ("Text file busy") instead of the broken
+        // shebang's ENOENT. Retry until that transient window closes.
+        let mut result = engine.probe(&target).await;
+        for _ in 0..20 {
+            if !result.message.contains("Text file busy") {
+                break;
+            }
+            tokio::time::sleep(Duration::from_millis(50)).await;
+            result = engine.probe(&target).await;
+        }
         assert_eq!(result.status, ProbeStatus::Broken);
         assert!(
             result.message.contains("stale virtual environment shebang"),
