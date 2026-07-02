@@ -6,6 +6,52 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- **`agentspan validate`**: pre-deploy configuration checking. Loads the
+  discovered config chain (or `--file <path>`), runs semantic validation,
+  echoes key effective values, and exits non-zero on problems so scripts and
+  CI can gate on it.
+- **API panic safety**: a `CatchPanicLayer` (tower-http) now wraps the router,
+  so a handler panic returns a clean `500` with the standard `{"error": ...}`
+  JSON envelope instead of dropping the connection.
+- **`agentspan-api` CLI flags**: the standalone API binary now honors
+  `--host`/`--port` (both `--flag value` and `--flag=value` forms) and errors
+  on unknown arguments instead of silently ignoring them.
+- **Supply-chain gates in CI**: `cargo deny` (license allowlist, yanked-crate
+  denial, crates.io-only sources) and a rustdoc gate
+  (`RUSTDOCFLAGS=-D warnings`) run on every push/PR.
+- **Docs**: `docs/why-agentspan.md` (concrete answers to "why not MCP servers
+  / OpenRouter / Composio / LangChain / SearXNG / Browser-Use") and
+  `BENCHMARKS.md` (CI-verified load-test numbers and method).
+
+### Fixed
+
+- Load-test workflow reliability: k6 installs via the official Grafana action
+  (the apt keyserver route flaked), the health-wait fails loudly instead of
+  passing silently, and the k6 summary reports the real p99 (the default
+  trend stats omit p(99), which a `?? 0` fallback masked as "0.0 ms").
+- `probe_detects_stale_venv_shebang` no longer flakes on ETXTBSY when
+  parallel tests fork during its write-then-exec window.
+- Corrected the MCP tool count to 91 everywhere (README, docs, web) — the
+  advertised 92 was an off-by-one against the actual `TOOLS` registry.
+- Four rustdoc "redundant explicit link target" warnings in `budget.rs` /
+  `extract.rs`.
+
+### Security
+
+- Bumped `anyhow` to 1.0.103 (RUSTSEC-2026-0190: unsound
+  `Error::context` + `downcast_mut` borrow violation).
+- Time-boxed, justified carve-outs for RUSTSEC-2026-0194/0195 (quick-xml DoS
+  via rss feed parsing) — no released rss/atom_syndication accepts the fixed
+  quick-xml 0.41 yet; tracked in issue #42 together with a planned
+  response-size cap on outbound channel fetches.
+
+### Performance
+
+- Tuned release profile: thin LTO, one codegen unit, stripped symbols.
+  Unwinding stays on so a request-task panic cannot abort the process.
+
 ## [0.5.0] - 2026-06-29
 
 ### Added
