@@ -167,7 +167,8 @@ impl Backend for TwitterCliBackend {
     ) -> Result<Vec<SearchResult>, BackendError> {
         let limit = if opts.limit == 0 { 20 } else { opts.limit };
         let out = self.run(&search_args(query, limit)).await?;
-        // TODO: verify twitter-cli's JSON shape against a pinned version.
+        // Caveat: twitter-cli's JSON shape is assumed from its docs, not a
+        // pinned version — hence the graceful fallback below.
         let parsed: serde_json::Value = match serde_json::from_str(&out) {
             Ok(v) => v,
             Err(_) => return Ok(crate::format::raw_search_fallback(&out)),

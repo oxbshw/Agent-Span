@@ -82,8 +82,9 @@ impl Backend for ExaMcporterBackend {
     ) -> Result<Vec<SearchResult>, BackendError> {
         let limit = if opts.limit == 0 { 10 } else { opts.limit };
         let limit_s = limit.to_string();
-        // TODO: verify mcporter's invocation + output against a pinned version;
-        // falls back to raw output if the response isn't the expected JSON.
+        // Caveat: mcporter's invocation + output shape are assumed from its
+        // docs, not pinned to a version — so this falls back to raw output
+        // if the response isn't the expected JSON.
         let output = tokio::process::Command::new("mcporter")
             .args([
                 "run",
