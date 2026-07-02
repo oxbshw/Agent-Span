@@ -58,7 +58,11 @@ pub async fn run(args: ValidateArgs) -> anyhow::Result<()> {
         None => {
             style::status_info("source: discovered configuration");
             if let Some(user) = Config::user_config_path() {
-                let state = if user.exists() { "found" } else { "not present" };
+                let state = if user.exists() {
+                    "found"
+                } else {
+                    "not present"
+                };
                 style::status_info(&format!("  user config: {} ({state})", user.display()));
             }
         }
