@@ -13,6 +13,10 @@ all-features = true
 [advisories]
 version = 2
 yanked = "deny"
+# Fail only when a *direct* workspace dependency is unmaintained — transitive
+# ones (e.g. proc-macro-error via utoipa-gen 4.x, RUSTSEC-2024-0370) still
+# surface as warnings but can't be fixed here without unrelated major bumps.
+unmaintained = "workspace"
 
 [licenses]
 version = 2
