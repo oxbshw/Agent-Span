@@ -1,10 +1,16 @@
 //! API route handlers.
 
+use std::any::Any;
+
 use axum::{
     extract::DefaultBodyLimit,
+    http::StatusCode,
+    response::{IntoResponse, Response},
     routing::{delete, get, post},
-    Router,
+    Json, Router,
 };
+use serde_json::json;
+use tower_http::catch_panic::CatchPanicLayer;
 
 use crate::AppState;
 
@@ -26,6 +32,27 @@ pub mod websocket;
 
 /// Maximum accepted request body size (2 MiB) — guards against oversized uploads.
 const MAX_BODY_BYTES: usize = 2 * 1024 * 1024;
+
+/// Turn a caught handler panic into the API's standard JSON error envelope.
+///
+/// The panic payload is logged server-side (it may contain internal detail),
+/// but the client only ever sees a generic `500` so we never leak internals.
+fn handle_panic(err: Box<dyn Any + Send + 'static>) -> Response {
+    let detail = if let Some(s) = err.downcast_ref::<&str>() {
+        s.to_string()
+    } else if let Some(s) = err.downcast_ref::<String>() {
+        s.clone()
+    } else {
+        "unknown panic payload".to_string()
+    };
+    tracing::error!(panic = %detail, "request handler panicked");
+
+    (
+        StatusCode::INTERNAL_SERVER_ERROR,
+        Json(json!({ "error": "internal server error" })),
+    )
+        .into_response()
+}
 
 /// Build the full application router.
 ///
@@ -87,12 +114,47 @@ pub fn build_router(state: AppState) -> Router {
         .route("/openapi.json", get(openapi::openapi_json))
         .route("/docs", get(openapi::swagger_ui_html))
         .merge(protected)
-        // Inner: cap request body size. Outer (added last): observe every
-        // request for trace IDs, metrics, and concurrency limiting.
+        // Layers apply inside-out (last added wraps the rest). Inner: cap
+        // request body size; then observe every request (trace IDs, metrics,
+        // concurrency limiting); outermost: catch any handler panic and turn it
+        // into a clean JSON 500 instead of dropping the connection.
         .layer(DefaultBodyLimit::max(MAX_BODY_BYTES))
         .layer(axum::middleware::from_fn_with_state(
             state.clone(),
             crate::observe::observe_middleware,
         ))
+        .layer(CatchPanicLayer::custom(handle_panic))
         .with_state(state)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use axum::body::{to_bytes, Body};
+    use axum::http::Request;
+    use tower::ServiceExt;
+
+    async fn boom() -> &'static str {
+        panic!("intentional test panic");
+    }
+
+    // A handler panic must surface as a clean JSON 500 (matching the API's
+    // `{"error": ...}` envelope), not a dropped connection.
+    #[tokio::test]
+    async fn panicking_handler_returns_json_500() {
+        let app = Router::new()
+            .route("/boom", get(boom))
+            .layer(CatchPanicLayer::custom(handle_panic));
+
+        let resp = app
+            .oneshot(Request::builder().uri("/boom").body(Body::empty()).unwrap())
+            .await
+            .unwrap();
+
+        assert_eq!(resp.status(), StatusCode::INTERNAL_SERVER_ERROR);
+
+        let bytes = to_bytes(resp.into_body(), usize::MAX).await.unwrap();
+        let body: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
+        assert_eq!(body["error"], "internal server error");
+    }
 }
