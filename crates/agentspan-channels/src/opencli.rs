@@ -120,9 +120,9 @@ impl OpenCliBackend {
         Self::new("instagram", "post", "search")
     }
 
-    // TODO: verify these subcommands/flags against the real OpenCLI binary;
-    // verbs (`reddit post`, `--json`, `--limit`) are based on its docs, not a
-    // pinned version. search() degrades gracefully if the output isn't JSON.
+    // Caveat: these subcommands/flags come from OpenCLI's docs, not a pinned
+    // binary version — verbs (`reddit post`, `--json`, `--limit`) may drift
+    // upstream. search() degrades gracefully if the output isn't JSON.
     async fn run(&self, args: &[&str]) -> Result<String, BackendError> {
         let output = tokio::process::Command::new("opencli")
             .args(args)

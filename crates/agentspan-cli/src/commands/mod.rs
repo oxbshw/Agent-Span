@@ -16,5 +16,6 @@ pub mod skill;
 pub mod transcribe;
 pub mod tunnel;
 pub mod uninstall;
+pub mod validate;
 pub mod version;
 pub mod watch;

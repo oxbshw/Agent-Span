@@ -8,7 +8,7 @@ mod style;
 use clap::{CommandFactory, Parser, Subcommand};
 use commands::{
     benchmark, check_update, completions, config, doctor, format, install, loadtest, mcp, plugin,
-    serve, setup, skill, transcribe, tunnel, uninstall, version, watch,
+    serve, setup, skill, transcribe, tunnel, uninstall, validate, version, watch,
 };
 
 #[derive(Parser)]
@@ -46,6 +46,8 @@ enum Commands {
     Plugin(plugin::PluginArgs),
     /// Show or modify configuration; import cookies
     Config(config::ConfigArgs),
+    /// Validate configuration files before deploying them
+    Validate(validate::ValidateArgs),
     /// Generate and install the agent skill (SKILL.md)
     Skill(skill::SkillArgs),
     /// MCP server config and tool discovery
@@ -83,6 +85,7 @@ async fn main() -> anyhow::Result<()> {
         Some(Commands::Tunnel(args)) => tunnel::run(args).await,
         Some(Commands::Plugin(args)) => plugin::run(args).await,
         Some(Commands::Config(args)) => config::run(args).await,
+        Some(Commands::Validate(args)) => validate::run(args).await,
         Some(Commands::Skill(args)) => skill::run(args).await,
         Some(Commands::Mcp(args)) => mcp::run(args).await,
         Some(Commands::Update(args)) => check_update::run(args).await,
