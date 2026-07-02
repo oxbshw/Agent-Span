@@ -483,8 +483,18 @@ mod tests {
         let reg = registry(vec![FakeChannel::new("a", &[("x", ProbeStatus::Ok)])]);
         let healer = Healer::with_interval(Duration::from_millis(5));
         let handle = healer.spawn(reg);
-        tokio::time::sleep(Duration::from_millis(40)).await;
+        // Poll rather than assume a fixed wall-clock delay is enough: under
+        // coverage instrumentation (ptrace) the spawned task gets far less CPU,
+        // so wait until it has run a cycle, up to a generous cap.
+        let mut ran = false;
+        for _ in 0..200 {
+            if !healer.monitor.is_empty() {
+                ran = true;
+                break;
+            }
+            tokio::time::sleep(Duration::from_millis(20)).await;
+        }
         handle.abort();
-        assert!(!healer.monitor.is_empty());
+        assert!(ran, "healer did not run a probe cycle within the timeout");
     }
 }

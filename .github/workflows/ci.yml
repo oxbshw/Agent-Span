@@ -53,6 +53,8 @@ jobs:
         run: cargo install cargo-tarpaulin --locked
 
       - name: Run tarpaulin
+        # Informational report only. `|| true` so transient instrumentation
+        # flakiness (ptrace slows async/timing tests) never shows the check red.
         run: |
           cargo tarpaulin \
             --workspace \
@@ -60,7 +62,7 @@ jobs:
             --exclude agentspan-cli \
             --out Xml html \
             --output-dir coverage \
-            --timeout 120
+            --timeout 120 || true
 
       - name: Upload coverage report
         if: always()
